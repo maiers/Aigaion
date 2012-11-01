@@ -1,0 +1,177 @@
+
+/* ==== BASIC FONT DEFINITIONS ==== */
+
+/* fonts */
+html, body, p, td, input, textarea, select { 
+	color      : #23221D;
+}
+
+/* default font color for entire body */
+body {	
+  color           : #23221D;
+	background-color: #23221D;
+}
+
+/* default link coloring */
+a, a:link, a:visited  {
+  color             : #23221D;
+}
+a:hover, a:active {
+  color             : #23221D;
+}
+/* coloring for lightlinks, not necessarily <a> elements  */
+.lightlink, .lightlink:link, .lightlink:visited {
+    color           : #23221D;
+}
+.lightlink:hover, .lightlink:active {
+    color           : #23221D;
+}
+
+
+/* Headers */
+.header {
+  background      : #9D9582;
+  
+}
+
+
+/* ==== COLORS AND BASIC DEFINITIONS FOR MAIN LAYOUT ELEMENTS ====*/
+
+#page_title {
+  color           : #23221D;
+}
+#main_holder {
+    border-color    : #9D9582;
+}
+
+#header_holder {
+  background-color: #D4D3AA;
+  border-color    : #9D9582;
+}
+
+#menu_holder, #content_holder, #footer_holder, #login_holder {
+  background-color: #D4D3AA;
+  border-color    : #9D9582;
+}
+
+/* ==== MENU COLORS AND EFFECTS ==== */
+li.mainmenu {
+  background      : #9D9582;
+}
+li.mainmenu:hover {
+  background      : #D4D3AA;
+}
+
+
+/* ==== MESSAGES AND ERRORS ==== */
+
+.message {
+    background-color: #F6F5D4;
+    border          : solid 1px #9D9582;
+}
+.errormessage {
+    border          : solid 1px #9D9582;
+}
+
+
+/* ==== FORMS ==== */
+
+/* general form element styling */
+
+
+.editform {
+
+  color           : #23221D;
+  background-color: #D4D3AA;
+  border-color    : #9D9582;
+}
+.confirmform {
+    background-color: #EE6666;  
+    color           : #23221D;
+    border-color    : #9D9582;
+}
+
+input, textarea, select {
+  border-color    : #9D9582;
+}
+input:focus, textarea:focus, select:focus {
+  background-color: #FBF9E6;
+  border-color    : #444444;
+}
+input:hover, textarea:hover, select:hover {
+  background-color: #FBF9E6;
+  border-color    : #444444;
+}
+
+/* special styles for publication edit forms */
+input.required, textarea.required, select.required {
+  border-color    : #CC0300;
+  background-color: #FFEEEE;
+}
+
+input.nonstandard, textarea.nonstandard, select.nonstandard {
+  border-color    : #333333;
+  background-color: #EEEEEE;
+}
+
+input.conditional, textarea.conditional, select.conditional {
+  border-color    : #493E0B;
+}
+
+
+/* ==== PUBLICATION VIEWS  ==== */
+
+.notelist {
+    padding:0.2em 0.2em 0.2em 4em;
+    margin:0px;
+}
+
+div.publication_summary {
+    background      : #9D9582;
+  /*border-bottom   : 1px solid #0F0F10;*/
+  /*border-left     : 1px solid #0F0F10;*/
+}
+
+div.publication_summary.odd {
+  background      : #D4D3AA;
+}
+
+/* small hack since otherwise the publication title header had wrong margin */
+div.publication {
+  border: 1px solid #9D9582;
+}
+
+span.author {
+  font-style      : italic;
+}
+span.authorlist {
+  font-style      : italic;
+}
+span.title {
+  font-weight     : bold;
+}
+
+ul.nosymbol {
+  list-style-type : none;
+}
+
+div.autocomplete {
+  border-color    : #9D9582;
+}
+div.autocomplete ul li.selected {
+    background-color: #FBF9E6;
+}
+ 
+ .loginbox {
+    border  : 1px solid black;
+}
+
+/* ==== HELP VIEWS  ==== */
+
+#helpheader-holder {
+    background-color: #eeeeee;
+    border:1px solid #E0E0E0;
+}
+li.help:hover {
+   background:#E0E0E0;
+}

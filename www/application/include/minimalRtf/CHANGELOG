@@ -1,0 +1,25 @@
+CHANGELOG
+
+Released through http://bibliophile.sourceforge.net under the GPL licence.
+Do whatever you like with this -- some credit to the author(s) would be appreciated.
+
+MINIMALRTF - A minimal set of RTF coding methods to produce Rich Text Format documents on the fly.
+
+If you make improvements, please consider contacting the administrators at bibliophile.sourceforge.net so that your improvements can be added to the release package.
+
+Mark Grimshaw 2006
+http://bibliophile.sourceforge.net
+
+################################################
+
+v1.5 (July 2006 - Matthias Steffens and Mark Grimshaw)
+1/ Added methods urlText(), emailText(), subscript(), superscript() and setFontColour().  
+2/ Tidied up some of the RTF and improved the unicode formatting.
+3/ Added an optional parameter to the justify() method to control the first line indentation.
+
+
+v1.1
+Tidied up documentation and added utf8_2_unicode() which will encode characters with an ASCII value of >= 128 in RTF 1.16 unicode format.
+
+v1.0
+Initial release.

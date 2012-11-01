@@ -1,0 +1,199 @@
+<!-- Publications List View -->
+
+<div class="publications">
+  
+  <style type="text/css">
+  
+    div.publications ol li
+    {
+      padding: 12px 4px 6px 4px;
+      min-height: 3em;
+      position: relative;
+    }
+    
+    div.publications ol li.publication + li
+    {
+      border-top: 1px solid #ddd;
+    }
+    
+    div.publications ol li.group
+    {
+      position: absolute;
+      min-height: 0;
+      left: -10em;
+      right: 0;
+      padding-right: 2em;
+      border-top: 1px solid #ddd;
+      font-weight: bold;
+      cursor: default;
+    }
+    
+    div.publications ol li.group a
+    {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    li.publication h1.title
+    {
+      font-weight: bold;
+      display: inline;
+    }
+    
+    li.publication div.year
+    {
+      display: inline;
+    }
+    
+    div.publications ol li.publication ol.authors li {
+      min-height: none;
+      padding: 0;
+    }
+        
+    div.publications li.publication ul.actions
+    {
+      position: absolute;
+      right: -18em;
+      width: 16em;
+      padding-left: 2em;
+      display: none;
+      top: 0px;
+      font-size: 0.8em;
+    }
+    
+    div.publications li.publication ul.actions li
+    {
+      padding: 0.4em;
+      background: #eee;
+      min-height: 1em;
+    }
+    
+    div.publications li.publication ul.actions li + li
+    {
+      border: none;
+    }
+    
+    div.publications li.publication:hover
+    {
+      background: #eee;
+    }
+    
+    div.publications li.publication:hover ul.actions
+    {
+      display: block;
+    }
+    
+    nav.list
+    {
+      margin: 1em 0;
+    }
+    
+    nav.list span
+    {
+      font-weight: bold;
+    }
+    
+    nav.list ul
+    {
+      display: inline;
+    }
+    
+    nav.list ul li
+    {
+      display: inline-block;
+      border: none;
+      margin: .2em 0em;
+      padding:0;
+      margin-left: .4em;
+      min-height: 0;
+    }
+    
+    nav.list ul li a
+    {
+      display: inline;
+      padding: 0;
+      margin: 0;
+    }
+    
+    nav.list ul li:after
+    {
+      content: ",";
+    }
+    
+    nav.list ul li:last-child:after
+    {
+      content: "";
+    }
+    
+    nav.list ul span.count {
+      font-weight: normal;
+      font-style: italic;
+    }
+    
+    nav.list ul li:hover
+    {
+      background: none;
+    }
+    
+    nav.list ul li.active
+    {
+      font-weight: bold;
+    }
+    
+  </style>
+  
+  <hgroup class="list">
+    <h1 class="publications">[header]</h1>
+  </hgroup>
+
+  <nav class="list">
+    <span >[orderBy]</span>
+    <ul>
+      <li><a href="[order.href]" title="[order.title]">[order.text;block=li]</a></li>
+    </ul>
+  </nav>
+  
+  <nav class="list">
+    <span>[jumpTo]</span>
+    <ul class="index">
+      <li><a href="[orderByIndex.href]" title="[orderByIndex.title]">[orderByIndex.text;block=li;bmagnet=nav] <span class="count">([orderByIndex.count;magnet=span])</span></a></li>
+    </ul>
+  </nav>
+  
+  <nav class="list pagination">
+    <span>[page]</span>
+    <ul>
+      <li>[pagination_top.active;att=class;attadd;if [val]=1;then 'active']<a href="[pagination_top.href;magnet=a;mtype=m+m]">[pagination_top.text;block=li;bmagnet=nav]</a></li>
+    </ul>
+  </nav>
+  
+  <ol>
+    <li class="group"><a id="ix[publication.group]">[publication.group;block=li;headergrp=group;magnet=li]</a></li>
+    <li class="publication">
+      <h1 class="title"><a href="[publication.href;block=li;sub1=authors;sub2=actions;sub3=editors]">[publication.title]</a></h1>
+      <div class="year">([publication.year])</div>
+      <ol class="authors">
+        <li><a href="[publication_sub1.href;block=li]" title="[publication_sub1.title]">[publication_sub1.text]</a></li>
+      </ol>
+      <div class="editors">
+        [editortext]:
+        <ol class="authors">
+          <li><a href="[publication_sub3.href;block=li;bmagnet=div]" title="[publication_sub3.title]">[publication_sub3.text]</a></li>
+        </ol>
+      </div>
+      <ul class="actions">
+        <li><a href="[publication_sub2.href;block=li]" title="[publication_sub2.title]">[publication_sub2.text]</a></li>
+      </ul>
+    </li>
+  </ol>  
+   
+  <nav class="list pagination">
+    <span class="orderBy">[page]</span>
+    <ul class="orderBy">
+      <li>[pagination_top.active;att=class;attadd;if [val]=1;then 'active']<a href="[pagination_bottom.href]">[pagination_bottom.text;block=li;bmagnet=nav]</a></li>
+    </ul>
+  </nav>
+   
+</div>
+
+<!-- End Publications List View -->

@@ -1,0 +1,444 @@
+<!-- Publication View -->
+
+<div class="publication">
+  
+  <style type="text/css" media="all">
+  
+    .publication div.header
+    {
+      background: #ccc;
+      padding: 0.4em;
+    }
+    
+    .publication div.header + div.header {
+      padding-top: 0;
+    }
+  
+    .publication div.header h1
+    {
+      font-weight: bold;
+      font-size: 1.1em;
+      display: inline-block;
+    }
+      
+    .publication h1.pubtype
+    {
+      font-weight: normal;
+    }
+    
+    .publication h1.citation
+    {
+      font-weight: normal;
+      font-style: italic;
+    }
+  
+    .publication h1.title
+    {
+    }
+    
+    .publication h1.year
+    {
+    }
+    
+    .publication h2
+    {
+      font-weight: bold;
+      margin: 1em 0 .2em 0;
+      border-bottom: 2px solid #ccc;
+    }
+    
+    .publication h1.year:before, .publication h1.citation:before
+    {
+      content: "(";
+    }
+    
+    .publication h1.year:after, .publication h1.citation:after
+    {
+      content: ")";
+    }
+    
+    .publication ol.authors
+    {
+      display: block;
+      clear: both;
+    }
+    
+    .publication .actions
+    {
+      position: absolute;
+      right: -15em;
+      width: 14em;
+      top: 5em;
+    }
+    
+    .publication .abstract, .publication ul.notes, .publication ul.attachments
+    {
+      font-style: italic;
+      margin: 0.6em 1em;
+      line-height: 1.2em;
+      font-size: 1.1em;
+      white-space: pre-line;
+    }
+    
+    .publication .details
+    {
+      width: 100%;
+    }
+    
+    .publication .details td
+    {
+      padding: .3em 0;
+    }
+    
+    .publication .details tr:nth-child(even) td
+    {
+      background: #eee;
+    }
+    
+    .publication .details tr.c1_mandatory
+    {
+      
+    }
+
+    .publication .details tr.c2_optional td:FIRST-CHILD, .publication .details tr.c3_custom td:FIRST-CHILD
+    {
+      font-style: italic;
+    }
+
+    .publication .details tr.hidden
+    {
+      display: none;
+    }
+    
+    .publication .details .label
+    {
+      width: 10em;
+    }
+    
+    .publication .details .label:after
+    {
+      content: ":";
+    }
+    
+    .publication .editable.dirty
+    {
+      opacity: 0.5;
+    }
+    
+    .publication .onedit
+    {
+      display: none;
+    }
+    
+    .publication input, .publication select, .publication textarea
+    {
+      border: none;
+      font-size: 1em;
+      width: 100%;
+      font-family: serif;
+    }
+    
+    .publication input[type=submit], .publication input[type=reset]
+    {
+      margin-top: 0.3em;
+      margin-right: 1em;
+      width: 8em;
+    }
+    
+    .publication select
+    {
+      display: inline-block;
+      width:auto;
+    }
+    
+    .publication textarea
+    {
+      min-height: 20em;
+    }
+    
+    .publication ul.notes
+    {
+    }
+    
+    .publication ul.notes li, .publication ul.attachments li
+    {
+      margin: 0.4em 0;
+    }
+    
+    .publication span.edit:before
+    {
+      content: '(';
+    }
+    
+    .publication span.edit:after
+    {
+      content: ')';
+    }
+    
+  </style>
+  
+  <script type="text/javascript">
+  
+  $(document).ready(function() {
+    
+    var active, oldContents;
+    
+    /*
+    $('div.publication').dblclick(function(evt) {
+      
+      var e = document.elementFromPoint(evt.pageX, evt.pageY),
+          $t = $(e);
+      
+      // must be editable and not dirty to proceed
+      if (!$t.hasClass('editable') || $t.hasClass('dirty')) {
+        return true;
+      }
+      
+      // save changes for last active field
+      closeLast();
+      
+      // set current item as active 
+      active = e;
+      oldContents = $t.text();
+      
+      // make editable
+      if ($t.hasClass('pubtype')) {
+        $t.hide();
+        $('select.pubtype').val($t.text());
+        $('select.pubtype').show();
+      } else {
+        $t.addClass('active');
+        //$t.attr('contenteditable', 'true');
+        $t.html('');
+        if ($t.hasClass('area')) {
+          $t.append('<textarea class="active">' + oldContents + '</textarea>');
+        } else {
+          $t.append('<input type="text" class="active" value="' + oldContents + '"/>');
+        }
+      }
+      
+      // add key register for enter if not an area field
+      if(!$t.hasClass('area')) {
+        $t.keydown(function(event) {
+          if (event.which == 13) {
+            closeLast();
+            return false;
+          }
+          
+        });
+      }
+      
+      return false;
+    });
+    
+    
+    $(document).click(function(evt) {
+      
+      var e = document.elementFromPoint(evt.pageX, evt.pageY);
+      if (e !== active && !$(e).hasClass('pubtype') && !$(e).hasClass('active')) {
+        closeLast();
+      }
+            
+    });
+    
+    function closeLast() {
+      
+      if (active !== undefined) {
+        var $a = $(active);
+        
+        if ($a.hasClass('pubtype')) {
+          $('select.pubtype').hide();
+          $a.show();
+          $a.text($('select.pubtype').val());
+          switchType();
+        } else {
+          $a.removeClass('active');
+          $a.text($a.find('input, textarea, select').val());
+        }
+        
+        if ($a.text() !== oldContents) {
+          $a.addClass('dirty');
+        }
+                
+      }
+      
+    }
+    
+    function switchType() {
+      
+      $('table.details tr').each(function(index, item) {
+        $i = $(item);
+        console.info($i)
+      });
+      
+    }
+    */
+    
+    $('#abstract span.action.edit a').click(editAbstract);
+    
+    function editAbstract() {
+      $p = $('#abstract p').hide();
+      $a = $('#abstract');
+      // create & append form
+      $f = $('<form/>');
+      $t = $('<textarea name="abstract">' + $p.text() + '</textarea>');
+      $f.append($t);
+      $f.append('<input type="submit"/>');
+      $f.append('<input type="reset"/>');
+      $a.append($f);
+      
+      var reset = function(writeback) {
+        if (writeback) {
+          $p.text($t.val());
+        }
+        $p.show();
+        $f.remove();
+      }
+      
+      // bind to submit event
+      $f.bind('submit', function() {
+        // post form data
+        var jqxhr = $.post('[postLink]', $f.serialize(), function(data) {
+          console.info(data);
+        });
+        // on success
+        jqxhr.success(function(data) {
+          jd = JSON.parse(data);
+          if (jd.type == 'success') {
+            reset(true);
+          } else {
+            showError(jd.code, jd.message);
+          }
+        });
+        // error handling
+        jqxhr.error(function(data) {
+          showError(1);
+        });
+        // prevent default
+        return false;
+      });
+      
+      // bind to reset event
+      $f.bind('reset', function() {
+        console.info('reset');
+        reset(false);
+        // prevent default
+        return false;
+      });
+      
+      // prevent default
+      return false;
+    }
+    
+    function showError(code, message) {
+      var txt = 'Unknown error occured';
+      if (message !== undefined) {
+        txt = 'Error: ' + message;
+      }
+      txt += ' (#' + code + ')';
+      console.error(txt);
+      alert(txt);
+    }
+      
+  }); 
+  
+  </script>
+  
+  <script type="text/javascript">
+  
+    var visibleFields = [visibleFields;htmlconv=no;protect=no];
+  
+  </script>
+  
+  <input type="hidden" name="pub_id" value="[publication.pub_id]"/>
+  
+  <div class="typeandkey header">
+    <h1 class="editable pubtype">[publication.pub_type]</h1>
+    <select class="pubtype onedit">
+      <option>[pubtypes.title;block=option]</option>
+    </select>
+    <h1 class="citation editable">[publication.bibtex_id]</h1>
+  </div>
+  
+  <div class="titleandyear header">
+    <h1 class="title">[publication.title]</h1>
+    <h1 class="year">[publication.year]</h1>
+  </div>
+  
+  <div class="authorsandeditors header">
+    <div class="authors namelist">
+      <ol class="authors">
+        <li><a href="[authors.href;block=li;bmagnet=ol]" title="[authors.title]">[authors.text]</a></li>
+      </ol>
+    </div>
+    <div class="editors namelist">
+      [editortext]:
+      <ol class="authors">
+        <li><a href="[editors.href;block=li;bmagnet=div]" title="[editors.title]">[editors.text]</a></li>
+      </ol>
+    </div>
+  </div>
+  
+  <div class="header">
+    <span class="action edit"><a href="[editLink]">[lang.edit]</a></span>
+  </div>
+  
+  <ul class="actions">
+    <li><a href="[actions.href;block=li;bmagnet=ul]" title="[actions.title]">[actions.text]</a></li>
+  </ul>
+  
+  <div id="abstract">
+    <h2>[lang.abstract] <span class="action edit"><a href="[editLink]">[lang.edit]</a></span></h2>
+    <p class="abstract area">[publication.abstract;htmlconv=nobr]</p>
+  </div>
+  
+  <div id="details">
+    <h2>[lang.details] <span class="action edit"><a href="[editLink]">[lang.edit]</a></span></h2>
+    <table class="details">
+      <tr class="[details.class]">
+        <td class="label [details.name]">[details.label;bmagnet=table;magnet=tr;block=tr]</td>
+        <td class="field editable">[details.value]</td>
+      </tr>
+    </table>
+  </div>
+  
+  <div id="notes">
+    <h2>[lang.notes] <span class="action add"><a href="[lang.url]notes/add/[publication.pub_id]">[lang.add]</a></span></h2>
+    <ul class="notes">
+      <li class="note">
+        <p class="text">[note.text;block=li]</p>
+        <span class="author">[note.author]</span>
+        <span class="action edit"><a href="[lang.url]notes/edit/[note.id]">[lang.edit]</a></span>
+        <span class="action delete"><a href="[lang.url]notes/delete/[note.id]">[lang.delete]</a></span>
+      </li>
+    </ul>
+  </div>
+  
+  <div id="keyword">
+    <h2>[lang.keywords] <span class="action edit"><a href="[editLink]/keywords">[lang.edit]</a></span></h2>
+    <ul class="keywords">
+      <li><a href="[keywords.href;block=li]" title="[keywords.title]">[keywords.text]</a></li>
+    </ul>
+  </div>
+  
+  <div id="topics">
+    <h2>[lang.topics]</h2>
+  </div>
+  
+  <div id="attachments">
+    <h2>[lang.attachments]</h2>
+    <ul class="attachments">
+      <li class="attachment">
+        <span class="action download"><a href="[attachments.href;block=li]" title="[attachments.text]">[attachments.text;ope=max:40]</a></span>
+        <span class="action view"><a href="/attachments/render/[attachments.id]" title="[attachments.text]">View</a></span>
+        <span class="action edit"><a href="[lang.url]attachments/edit/[attachments.id]" title="[lang.edit] '[attachments.text]'">[lang.edit]</a></span>
+        <span class="action delete"><a href="[lang.url]attachments/delete/[attachments.id]" title="[lang.delete] '[attachments.text]'">[lang.delete]</a></span>
+        <span class="action setmain"><a href="[lang.url]attachments/setmain/[attachments.id;if [attachments.ismain]=0;magnet=span]" title="[lang.tsetmain]">[lang.setmain]</a></span>
+        <p class="note">[attachments.note]</p>
+      </li>
+    </ul>
+  </div>
+  
+</div>
+
+<!-- End Publication View  -->

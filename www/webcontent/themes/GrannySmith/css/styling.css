@@ -1,0 +1,223 @@
+
+/*  Colorscheme   : Granny Smith
+    White         : #FFFFFF;
+    Semi-white    : #F6F5D4;
+    Light-green   : #D0E854;
+    Shade-green   : #ABC41F;
+    Brown         : #493E0B;
+    Red           : #CC0300;
+    Black         : #000000;
+*/
+/*  Colorscheme   : Granny Smith.
+
+    #493E0B : the dark background around the main frame, 
+    #493E0B : normal black font
+    #FFFFFF : the normal color of the background of the main box
+    #D0E854 : background of main site elements
+    #ABC41F : border around messageboxes and other borders
+    #ABC41F : background of message boxes and headers
+    #CC0300 : dark red background of error messages
+    #000000 : textcolor on dark red background
+
+    #493E0B : brown color used for all links
+
+    #493E0B : menu text (#493E0B on mouseover)
+    #ABC41F : background of menu entries (#D0E854 on mouseover)
+
+    #493E0B : heavy borders
+    #ABC41F : edit form background
+    #493E0B : edit form elements border
+    #FFFFFF : edit form elements background (#F6F5D4 on focus)
+    
+    #D0E854 : background even publication summaries
+    #ABC41F : background odd publication summaries
+*/
+
+
+/* ==== BASIC FONT DEFINITIONS ==== */
+
+/* fonts */
+html, body, p, td, input, textarea, select {
+	color      : #493E0B;
+}
+
+/* default font color for entire body */
+body {
+	color: #493E0B;
+}
+
+/* default link coloring */
+a, a:link, a:visited  {
+  color             : #493E0B;
+}
+a:hover, a:active {
+  color             : #493E0B;
+}
+/* coloring for lightlinks, not necessarily <a> elements  */
+.lightlink, .lightlink:link, .lightlink:visited {
+    color           : #493E0B;
+}
+.lightlink:hover, .lightlink:active {
+    color           : #493E0B;
+}
+
+/* Icons */
+
+.large_icon {
+    width   : 1.3em;
+}
+
+
+/* Headers */
+.header {
+  background      : #ABC41F;
+}
+
+
+
+/* ==== COLORS AND BASIC DEFINITIONS FOR MAIN LAYOUT ELEMENTS ====*/
+
+/* Main layout box colors */
+body {
+    background-color: #493E0B;
+}
+
+#page_title {
+  color           : #493E0B;
+}
+
+#main_holder {
+    border-color    : #493E0B;
+}
+
+#header_holder {
+  background-color: #D0E854;
+  border-color    : #ABC41F;
+  color           : #493E0B;
+}
+
+#menu_holder, #content_holder, #footer_holder, #login_holder {
+  background-color: #D0E854;
+  border-color    : #ABC41F;
+}
+
+/* ==== MENU COLORS AND EFFECTS ==== */
+
+li.mainmenu {
+  background      : #ABC41F;
+}
+li.mainmenu:hover {
+  background      : #D0E854;
+}
+
+
+/* ==== MESSAGES AND ERRORS ==== */
+
+.message {
+
+    background-color: #ABC41F;
+    border          : solid 1px #ABC41F;
+}
+.errormessage {
+
+    background-color: #CC0300;
+    border          : solid 1px #ABC41F;
+    
+    color           : #000000;
+}
+
+/* ==== FORMS ==== */
+
+/* general form element styling */
+
+
+.editform {
+    background-color: #ABC41F;
+    border          : solid 1px #493E0B;
+}
+.confirmform {
+    background-color: #CC0300;
+    border          : solid 1px #493E0B;
+}
+
+input, textarea, select {
+  border-color    : #ABC41F;
+}
+input:focus, textarea:focus, select:focus {
+  background-color: #F6F5D4;
+  border-color    : #ABC41F;
+}
+input:hover, textarea:hover, select:hover {
+  background-color: #F6F5D4;
+  border-color    : #ABC41F;
+}
+
+/* special styles for publication edit forms */
+input.required, textarea.required, select.required {
+  border-color    : #CC0300;
+}
+
+input.nonstandard, textarea.nonstandard, select.nonstandard {
+  border-color    : #493E0B;
+}
+
+input.conditional, textarea.conditional, select.conditional {
+  border-color    : #493E0B;
+}
+
+
+
+/* ==== TOPIC TREE ==== */
+ul.topictree-sublist {
+    list-style-type : none;
+    padding: 0;
+    margin-left: 2em;
+}
+
+
+/* ==== PUBLICATION VIEWS  ==== */
+
+
+
+div.publication_summary {
+  /*border-bottom   : 1px solid #493E0B;*/
+  /*border-left     : 1px solid #493E0B;*/
+}
+
+div.publication_summary.odd {
+  background      : #ABC41F; 
+  border-left     : none;
+}
+
+/* small hack since otherwise the publication title header had wrong margin */
+div.publication {
+  border: 1px solid #D0E854;
+}
+
+
+
+div.autocomplete {
+  border-color    : #ABC41F;
+}
+div.autocomplete ul li.selected {
+    background-color: #F6F5D4;
+}
+
+
+ .loginbox {
+    padding : 3px;
+    border  : 1px solid #493E0B;
+}
+
+/* ==== HELP VIEWS  ==== */
+
+#helpheader-holder {
+  background-color: #ABC41F;
+  border          : 1px solid #493E0B;
+}
+
+li.help:hover {
+  background     : #ABC41F; /* D0E854; */
+}
+
+

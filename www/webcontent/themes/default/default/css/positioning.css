@@ -1,0 +1,54 @@
+body {
+  text-align      : center;
+}
+
+#main_holder {
+  margin          : 10px auto 10px auto;
+  text-align      : left;
+  
+  width           : 90em;
+  min-width       : 40em;
+  max-width       : 120em;
+
+  min-height      : 60em;
+}
+
+#header_holder {
+  height          : 4em;  
+}
+
+#menu_holder {
+  float           : left;
+  margin          : 1em;
+  padding         : 1em;
+
+  width           : 12em;
+}
+  
+#content_holder {
+  margin          : 1em 1em 1em 17em;
+  padding         : 1em;
+  
+  min-height      : 40em;
+}
+
+#footer_holder {
+  margin          : 1em 1em 1em 17em;
+  padding         : 0.2em;
+}
+
+#quicksearch {
+  margin          : 1.2em;
+  text-align      : right;
+  float           : right;
+}
+
+#login_holder {
+  margin          : 10px auto 10px auto;
+  text-align      : left;
+  
+  width           : 40em;
+  min-width       : 40em;
+  max-width       : 80em;
+  
+}

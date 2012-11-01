@@ -1,0 +1,10 @@
+# ignore eclipse stuff
+.buildpath
+.project
+.settings
+
+# ignore attachments
+webserver/attachments/*
+
+# ignore logs
+webserver/application/logs/*

@@ -1,0 +1,523 @@
+/*  Colorscheme   : Old darkdefault colors from Aigaion 1.x.
+
+    #778899 : the dark background around the main frame, 
+    #000022 : normal black font
+    #FFFFFF : the normal color of the background of the main box
+    #EEEEEE : background of main site elements
+    #DDDDDD : border around messageboxes and other borders
+    #E0E0E0 : background of message boxes and headers
+    #EE6666 : dark red background of error messages
+
+    #1B6896 : blueish color used for all links
+
+    #222255 : menu text (#333366 on mouseover)
+    #DDDDDD : background of menu entries (CCCCCC on mouseover)
+
+    #0F0F10 : edit form borders and other heavy borders
+    #D2DCE6 : edit form background
+    #999999 : edit form elements border (444444 on focus)
+    #FFFFFF : edit form elements background (EEEEFF on focus)
+    
+    #EEEEEE : background even publication summaries
+    #E2E2Ec : background odd publication summaries
+*/
+
+/* ==== PAGE FLOW BEHAVIOUR  ==== */
+/* collapse for all table and div borders / margins / paddings 
+   this is default, because otherwise different browsers will show different styles.
+   if you want margins and paddings you have to specify them */
+div {
+    border      : 0px;
+    margin      : 0px;
+    padding     : 0px;
+    position    : relative;
+    min-width:0;
+}
+/*min-width was needed for the hasLayout bug, see:
+http://www.satzansatz.de/cssd/onhavinglayout.html
+http://www.cayenne.co.uk/ie7/disappearing-content.html
+*/
+
+td, table, tr, tbody {
+    border          : 0px;
+    border-spacing  : 0px;
+    border-collapse : collapse;
+    margin          : 0px;
+    padding         : 0px;
+    vertical-align  : top;
+}   
+/* by default, collapse ul top and bottom (IE leaves too much whitespace) */
+ul {
+    margin-top : 0em;
+    margin-bottom : 0em;
+}
+td {
+    padding          : 1px;
+}
+
+div.clearer {
+    clear       : both; 
+    line-height : 0; 
+    height      : 0;
+}
+/* ==== BASIC FONT DEFINITIONS ==== */
+
+/* fonts */
+html, body, p, td, input, textarea, select {
+    font-family     : Verdana, Arial, Helvetica, Sans-serif;
+    font-size       : 10px;    
+	color      : #000022;
+}
+
+/* default font color for entire body */
+body {
+	color: #000022;
+}
+
+/* default link coloring */
+a, a:link, a:visited  {
+  color             : #1B6896;
+  text-decoration   : none;
+}
+a:hover, a:active {
+  color             : #1B6896;
+  text-decoration   : underline;
+}
+/* coloring for lightlinks, not necessarily <a> elements  */
+.lightlink, .lightlink:link, .lightlink:visited {
+    color           : #000000;
+    text-decoration : none;
+}
+.lightlink:hover, .lightlink:active {
+    color           : #1B6896;
+    text-decoration : none;
+}
+
+/* Icons */
+.icon {
+    width   : 1em;
+    border  : 0px;
+}
+.large_icon {
+    width   : 1.5em;
+    border  : 0px;
+}
+.al_icon { /* old, to be removed */
+    border  : 0px;
+    width   : 1em;
+}
+.rights_icon {
+    border  : 0px;
+    width   : 1em;
+}
+
+
+/* Headers */
+.header {
+  padding         : 0.1em 4em .1em 0.5em;
+  margin          : 1em 0 1em 0;
+  background      : #E0E0E0;
+  
+  font-weight     : bold;
+  font-size       : 1.1em;
+}
+
+/* optionbox: the edit links in a header, e.g. at a topic page*/
+div.optionbox {
+  margin-top      : 1.1em;
+  padding-right   : 0.2em;
+  float           : right;
+  clear           : right;
+  z-index         : 999;
+  text-align      : right;
+}
+
+/* a simple table style */
+td.tablewithborder , table.tablewithborder {
+    border          : 1px solid black;
+    border-spacing  : 0px;
+    border-collapse : collapse;
+    margin          : 1px;
+    padding         : 1px;
+    vertical-align  : top;
+}   
+
+/* ==== COLORS AND BASIC DEFINITIONS FOR MAIN LAYOUT ELEMENTS ====*/
+
+/* Main layout box colors */
+body {
+    background-color: #778899;
+}
+
+#page_title {
+  color           : #000022;
+  font-size       : 3em;
+  font-weight     : 400;
+  font-style      : italic;
+}
+
+#main_holder {
+    background-color: #FFFFFF;
+    border-style    : solid;
+    border-width    : 1px;
+    border-color    : #0F0F10;
+}
+
+#header_holder {
+  background-color: #EEEEEE;
+  border-style    : solid;
+  border-width    : 0px 0px 1px 0px;
+  border-color    : #E0E0E0;
+  text-decoration      : none;
+  color           : #000022;
+}
+
+#menu_holder, #content_holder, #footer_holder, #login_holder {
+  background-color: #EEEEEE;
+  border-style    : solid;
+  border-width    : 1px;
+  border-color    : #E0E0E0;
+}
+
+/* ==== MENU COLORS AND EFFECTS ==== */
+ul.mainmenu {
+  list-style-type : none;
+  padding         : 0em;
+  margin          : 0em;
+}
+li.mainmenu {
+  background      : #DDDDDD;
+  margin          : 0em 0em 0.5em 0em;
+  padding         : 0.2em;
+}
+li.mainmenu:hover {
+  background      : #CCCCCC;
+}
+li.mainmenu-header {
+  margin-top      : 1em;
+  margin-bottom   : 0.2em;
+}
+li.mainmenu-spacer {
+  margin          : 0em 0em 0em 0em ;
+  padding         : 0em 0em 0em 0em ;
+  height          : 0em;
+  clear:left; /* sjeesj..... why?????? otherwise IE adds 2em of whitespace here!!! */
+  float:left; /* and the same for this entry - otherwise IE adds 2em of whitespace here!!! */
+  
+}
+
+/* ==== MESSAGES AND ERRORS ==== */
+
+.message {
+    font-size       : 90%;
+    margin          : 1em;
+    padding         : 1em;
+    background-color: #E0E0E0;
+    border          : solid 1px #DDDDDD;
+}
+.errormessage {
+    font-size       : 90%;
+    margin          : 1em;
+    padding         : 1em;
+    background-color: #EE6666;
+    border          : solid 1px #DDDDDD;
+}
+.errortext {
+	color: #ee6666;
+	font-weight: bold;
+}
+
+/* ==== FORMS ==== */
+
+/* again, collaps: IE adds another full 1em padding / margin if you don't collapse 
+them, compared to firefox */
+form {
+    padding:1px;
+    margin:1px;
+}
+
+/* general form element styling */
+
+
+.editform {
+    margin          : 1em;
+    padding         : 1em;
+    background-color: #D2DCE6;
+    border          : solid 1px #0F0F10;
+}
+.confirmform {
+    margin          : 1em;
+    padding         : 1em;
+    background-color: #EE6666;
+    border          : solid 1px #0F0F10;
+}
+
+input, textarea, select {
+  border-style    : solid;
+  border-width    : 1px;
+  border-color    : #999999;
+  margin          : 0;
+  padding         : 0.2em;
+  font-size       : 1em;
+}
+input:focus, textarea:focus, select:focus {
+  background-color: #EEEEFF;
+  border-color    : #444444;
+}
+input:hover, textarea:hover, select:hover {
+  background-color: #EEEEFF;
+  border-color    : #444444;
+}
+
+/* special styles for publication edit forms */
+input.required, textarea.required, select.required {
+  border-color    : #CC0300;
+  background-color: #FFEEEE;
+}
+
+input.nonstandard, textarea.nonstandard, select.nonstandard {
+  border-color    : #333333;
+  background-color: #EEEEEE;
+}
+
+input.conditional, textarea.conditional, select.conditional {
+  border-color    : #493E0B;
+}
+
+tr.hidden {
+ visibility       : hidden;
+ display: none;
+ height: 0px;
+}
+
+
+/* ==== ACCESS LEVELS RELATED THINGS ==== */
+.owner_self {
+    font-weight : bold;
+    color  : green;
+}
+.owner_other {
+    font-weight : bold;
+    color  : red;
+}
+
+/* ==== TOPIC VIEWS ==== */
+.topicstats {
+    border:1px solid black;
+    padding:0.2em;
+    margin:0.2em;
+    margin-bottom:1em;
+}
+
+/* ==== TOPIC TREE ==== */
+ul.topictree-list {
+    list-style-type : none;
+    padding: 0;
+    margin-left: 1.5em;
+}
+
+li.topictree-node {
+    margin-top    : 0em;
+    margin-bottom : 0em;
+
+}
+
+li.topictree-leaf {
+    margin-bottom: 0em;
+}
+
+/* IE hack 
+problem: empty <li> has a height of 1 em in IE 5 and IE7.
+
+Originally, we used
+  #margin-top: -1em;  Works on all IE browsers up to version 7 
+  _margin-top: 0em;   Works on all IE browsers prior to version 7 
+  
+But it seems the display:inline does the trick here as well, and it seems to avoid one or two other display oddities
+http://www.positioniseverything.net/explorer/doubled-margin.html
+*/
+li.topictree-children {
+  display: inline;
+  margin-top: 0em;
+}
+
+.subscriptionlink {
+}
+
+.subscribedtopic {
+    font-weight : bold;
+}
+.unsubscribedtopic {
+    font-weight : normal;
+}
+
+/* ==== PUBLICATION VIEWS  ==== */
+
+.notelist {
+    padding:0.2em 0.2em 0.2em 4em;
+    margin:0px;
+}
+
+div.publication_summary {
+  padding         : 0.1em 0.1em 1em 0.5em;
+  /*border-bottom   : 1px solid #0F0F10;*/
+  /*border-left     : 1px solid #0F0F10;*/
+}
+
+div.publication_summary.odd {
+  /*background      : #E0E0E0; */
+  background      : #DDDDDD; 
+  border-left     : none;
+  /*border-right    : 1px solid #0F0F10;*/
+}
+
+img.coverimage {
+  width  : 15em;
+}
+/* small hack since otherwise the publication title header had wrong margin */
+div.publication {
+  border: 1px solid #EEEEEE;
+}
+
+span.author {
+  font-style      : italic;
+}
+span.authorlist {
+  font-style      : italic;
+}
+option.primaryauthor {
+}
+option.synonymauthor {
+  font-style      : italic;
+}
+span.title {
+  font-weight     : bold;
+}
+
+ul.nosymbol {
+  list-style-type : none;
+}
+
+div.autocomplete {
+  position        : absolute;
+  width           : 250px;
+  background-color: #FFFFFF;
+  border          : 1px solid;
+  border-color    : #DDDDDD;
+  margin          : 0px;
+  padding         : 0px;
+  z-index         : 999;
+}
+div.autocomplete ul {
+    list-style      : none!important;
+    list-style-image: none!important;
+    margin          : 0px;
+    padding         : 0px;
+}
+div.autocomplete ul li.selected {
+    background-color: #EEEEFF;
+}
+div.autocomplete ul li {
+    font-size       : 1em;
+    list-style-type : none;
+    display         : block;
+    margin          : 0;
+    padding         : 2px;
+    cursor          : pointer;
+}
+
+.alignright {
+    text-align: right;
+}
+
+.aligncenter {
+  text-align: center;
+}
+
+.aligntop {
+  vertical-align: top;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.fivepercentwidth {
+  width: 5%;
+}
+
+ .nobr {
+  white-space: nowrap;
+ }
+ 
+ .loginbox {
+    padding : 3px;
+    border  : 1px solid #000000;
+}
+
+/* ==== HELP VIEWS  ==== */
+
+#helpheader-holder {
+    text-align:center;
+    font-size:    100%;
+    margin: 1em ;
+    padding : 1em ;
+    background-color: #DDDDDD;
+    border:1px solid #0F0F10;
+}
+ul.help {
+  list-style-type : none;
+  padding: 0;
+  margin: 0;
+  display:inline; 
+}
+li.help {
+  display:inline; 
+  padding-left:0.2em;
+  padding-right:0.2em;
+}
+li.help:hover {
+   background:#EEEEFF;
+}
+li.help-header {
+  display       : block; 
+  margin-bottom : 0.2em;
+  font-weight: bold;   
+  font-family: verdana; 
+  font-size: 140%; 
+}
+
+/* ==== TAG-Cloud views ==== */
+#tagcloud {
+  text-align:center; 
+}
+ul.tagcloud { 
+  padding:0; 
+  margin:0px;
+  text-align:center; 
+  list-style:none; 
+  display: inline;
+}
+
+ul.tagcloud li { 
+  display:inline; 
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+ul.tagcloud li.t1 a { 
+  font-size: 1em; 
+  opacity:0.6;
+}
+ul.tagcloud li.t2 a { 
+  font-size: 1.3em;
+  opacity:0.8;
+}
+ul.tagcloud li.t3 a { 
+  font-size: 1.6em; 
+  opacity:1.0;
+}
+
+.header1  {  font-weight: bold;   font-family: arial; font-size: 140%; margin-top: 0.2em;} 
+.header2 {  font-weight: bold;   font-family: arial; font-size: 120%; margin-top: 0.2em;} 
+.header3 {  font-style:  italic; font-family: arial; font-size: 120%; margin-top: 0.2em;}

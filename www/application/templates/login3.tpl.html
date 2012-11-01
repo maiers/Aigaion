@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>[title]</title>
+    <link href="[webroot]themes/_[style]/css/reset.css" rel="stylesheet" type="text/css" media="screen,projection,tv" />
+    <link href="[webroot]themes/_[style]/css/positioning.css" rel="stylesheet" type="text/css" media="screen,projection,tv" />
+    <link href="[webroot]themes/_[style]/css/styling.css"     rel="stylesheet" type="text/css" media="screen,projection,tv" />
+    <script type="text/javascript" src="[webroot]javascript/jquery-1.7.min.js"></script>
+    <style type="text/css">
+    
+      #header_holder.login
+      {
+        text-align: left;
+      }
+      
+      #header_holder.login h1
+      {
+        padding: 6px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2em;
+        font-family: sans-serif;
+      }
+      
+      #content_holder div.login
+      {
+        width: 30em;
+        margin: auto;      
+      }
+      
+      #content_holder div.login h1
+      {
+        font-weight: bold;
+        margin: 1em 0;
+        font-size: 1.2em;
+      }
+      
+      div.login div
+      {        
+        margin: 0.4em 0;
+      }
+      
+      div.login table
+      {
+        width: 100%;
+      }
+      
+      div.login table td.label
+      {
+        width: 8em;
+      }
+      
+      div.login table td *
+      {
+        margin: .2em 0;
+      }
+      
+      div.login table td input[type=text], div.login table td input[type=password]
+      {
+        width: 100%;
+      }
+      
+      div.login table td.submit
+      {
+        text-align: right;
+      }
+      
+      #loginRemember
+      {
+        display: inline-block;
+        margin-right: 5px;
+      }      
+    
+    </style>
+  </head>
+  <body>
+
+    <div id="main_holder">
+        
+        <header id="header_holder" class="login">
+          <h1>[welcome_title]</h1>
+        </header>
+        <div id="content_holder">
+        
+          <div class="login">
+        
+            <h1>[welcome_title]</h1>
+            
+            <form id="login" action="[login_url]" method="post">
+            
+              <table>
+                <tr>
+                  <td class="label"><label for="loginName">[user]</label></td>
+                  <td class="input"><input type="text" name="loginName" id="loginName"/></td>             
+                </tr>
+                <tr>
+                  <td><label for="loginPass">[pwd]</label></td>
+                  <td><input type="password" name="loginPass" id="loginPass"/></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <input type="checkbox" name="remember" id="loginRemember"/>
+                    <label for="loginRemember">[remember]</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td class="submit"><input type="submit" value="[login]"/></td>
+                </tr>
+               </table>
+            
+            </form>
+          
+          </div>
+        
+        </div>
+        
+    </div>
+  
+  </body>
+</html>

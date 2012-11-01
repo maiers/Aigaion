@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>[title]</title>
+    <link href="[webroot]/javascript/jquery-ui-1.8.16/css/ui-lightness/jquery-ui.custom.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="[webroot]javascript/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="[webroot]/javascript/jquery-ui-1.8.16/jquery-ui.custom.min.js"></script>
+    <link href="[webroot]themes/_[style]/css/reset.css" rel="stylesheet" type="text/css" media="screen,projection,tv" />
+    <link href="[webroot]themes/_[style]/css/positioning.css" rel="stylesheet" type="text/css" media="screen,projection,tv" />
+    <link href="[webroot]themes/_[style]/css/styling.css"     rel="stylesheet" type="text/css" media="screen,projection,tv" />
+    <script type="text/javascript">
+    
+      $(document).ready(function() {
+        
+        var $q = $('#quicksearch input[name=searchstring]'), 
+            oldValue;
+         
+        
+        $q.autocomplete({
+          source: '[autoCompleteUrl]',
+          minLength: 3,
+          close: function(event, ui) {
+            console.info('close');
+            if ($q.val() != oldValue) {
+              console.info('could submit');  
+              //$('#quicksearch form').submit();
+            }
+          },
+          open: function(event, ui) {
+            console.info('open');
+            oldValue = $q.val();
+          },
+          select: function(event, ui) {
+            window.location.href = ui.item.url;
+          }
+        }).data( "autocomplete" )._renderItem = function( ul, item ) {
+          var groupHead = (item.newType) ? '<h1>' + item.type + '</h1>' : '';
+          var label = "<a>" + item.label.substr(0,40) + ((item.label.length > 40) ? '...' : '') + '</a>'
+          return $( "<li></li>" )
+            .data( "item.autocomplete", item )
+            .append( groupHead + label )
+            .appendTo( ul );
+        };
+        
+      });
+    
+    </script>
+  </head>
+  <body>
+
+  <div id="main_holder">
+      
+      <!-- Aigaion header: Logo, simple search form -->
+      
+      <header id="header_holder">
+        <div id='quicksearch'>
+          [quicksearch;htmlconv=no]
+        </div>
+      </header>
+      
+      <!-- End of header -->
+      
+      <!--  Aigaion Navigation -->
+      
+      <div id="menu_holder">
+		
+		<nav id="nav_action">
+          <h1>[navactiontitle]</h1>
+          <ul class="mainmenu">
+            <li><a href="[navaction.href;block=li]" title="[navaction.title]">[navaction.text]</a></li>
+          </ul>
+        </nav>
+		
+        <nav id="nav_main">
+          <h1>[navviewtitle]</h1>
+          <ul class="mainmenu">
+            <li><a href="[navview.href;block=li]" title="[navview.title]">[navview.text]</a></li>
+          </ul>
+        </nav>
+        
+        <nav id="nav_system">
+          <h1>[navsystitle]</h1>
+          <ul class="sysmenu">
+            <li><a href="[navsys.href;block=li;bmagnet=nav]" title="[navsys.title]">[navsys.text]</a></li>
+          </ul>
+        </nav>
+      
+      </div>
+      
+      <!--  End of Aigaion Navigation -->
+      
+      <!-- Aigaion Content -->
+      
+      <div id="content_holder">
+      
+      

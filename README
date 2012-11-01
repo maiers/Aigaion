@@ -1,0 +1,36 @@
+==== CLEAN INSTALL ====
+    
+This documentation is for installing Aigaion 2.5 from scratch, with an empty database
+    
+    1)  Copy the Aigaion 2.5 files from the www folder to <WEBROOT>/<aigaion2_rootdir>/
+    2)  Create a new MySQL database '<db_aigaion2>', with an appropriate user. The database is empty.
+    3)  Unpack <WEBROOT>/<aigaion2_rootdir>/install/install.zip into the directory 
+        <WEBROOT>/<aigaion2_rootdir>/install/
+    4)  make a directory where attachments will be stored, and make it writable. By default, 
+        Aigaion expects this directory to be <WEBROOT>/<aigaion2_rootdir>/attachments
+    5)  Point your browser to http://<server>/<aigaion2_rootdir>/install/install.php
+
+    From there on, follow the instructions on the screen.
+
+==== UPGRADE FROM AIGAION 2.x ====
+
+		1) Take a backup of the database
+		2) Check that you have taken a backup of the database
+		3) (If you have modified files in the Aigaion system:
+		    Backup all the files of the Aigaion program
+		4) Extract all the new files from the new release into the same directory.
+		5) login as database admin to upgrade the database structure
+
+==== UPGRADE FROM AIGAION 1.x ====
+    
+This documentation is for updating Aigaion 2.0 from an Aigaion 1.x installation
+    
+    1)  Copy the Aigaion 2.0 files to <WEBROOT>/<aigaion2_rootdir>/
+    2)  Create a new MySQL database '<db_aigaion2>', with an appropriate user. The database is empty.
+    3)  Unpack <WEBROOT>/<aigaion2_rootdir>/install/install.zip into the directory 
+        <WEBROOT>/<aigaion2_rootdir>/install/
+    4)  Point your browser to http://<server>/<aigaion2_rootdir>/install/install.php
+
+From there on, follow the instructions on the screen.
+
+After installing, please run the maintenance checks (under Site Maintenance)

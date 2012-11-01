@@ -1,0 +1,89 @@
+MINIMALRTF - A minimal set of RTF coding methods to produce Rich Text Format documents on the fly.
+
+Released through http://bibliophile.sourceforge.net under the GPL licence.
+Do whatever you like with this -- some credit to the author(s) would be appreciated.
+
+If you make improvements, please consider contacting the administrators at bibliophile.sourceforge.net so that your improvements can be added to the release package.
+
+This package is called minimalRTF for a reason.  It does not claim to produce all the codes and formatting that word processors expect in a RTF document. Instead, it aims to get you up and running as quickly as possible producing RTF documents on the fly from your PHP code.  You will find that if you open a RTF file produced using minimalRtf in a decent word processor such as OpenOffice (or even Word) it will display perfectly well.  Additionally, if you then save it as RTF from that word processor, all the extra RTF coding that minimalRtf does not provide will be inserted automatically.
+
+Mark Grimshaw 2006
+http://bibliophile.sourceforge.net
+
+#####################################################################################
+
+USAGE:
+
+A (minimal) RTF file is composed of three parts:
+a) An encapsulating tag identifying the document as RTF;
+b) A header defining the font blocks and
+c) Your text which makes use of the font blocks and may have other formatting codes.
+
+Therefore, you should use the following methods and undertake the following steps in this order:
+a) $rtf = new MINIMALRTF();
+b) Call $rtf->openRtf();
+c) Define your font blocks using $rtf->createFontBlock() first then set them using $rtf->setFontBlock();
+d) Define an initial justification and indentation with $rtf->justify();
+e) Pass paragraph-sized chunks to $rtf->textBlock();
+f) Call $rtf->closeRtf();
+
+
+METHODS:
+
+string openRtf();
+	Return a string composed of RTF open file code.  This should be the first thing you call.
+
+string closeRtf();
+	Return a string composed of RTF close file code.  This should be the last thing you call.
+
+BOOLEAN createFontBlock(integer $fontBlock, string $font)
+	$fontBlock is a unique integer identifying this fontBlock and is used by you in other methods such as textBlock();
+	$font is the font to be used such as "Times New Roman", "Trebuchet"
+	If either one of these are not set, createFontBlock will return FALSE.
+	This method should be called at least once before setFontBlock() otherwise setFontBlock() will return FALSE.
+	It is up to you to ensure $fontBlock is a unique integer for each fontBlock you set.
+
+string setFontBlock()
+	Return a string composed of RTF font block code.  If createFontBlock() has not been previously called or returned FALSE,
+	setFontBlock() will also return FALSE.
+
+string justify(string $justify = "full", integer $indentL = 0, integer $indentR = 0, integer $indentF = 0)
+	Return a string composed of RTF justification and indentation code.  The defaults are as indicated above.
+	$justify may be one of "full", "left", "right" or "centre".
+	$indentL and $indentR are the number of TABs to indent from the left and right respectively. A TAB is taken to be equivalent to 720 RTF units.
+	$indentF is the number of TABs to indent the first line only.
+
+string paragraph(integer $fontBlock = 0, integer $fontSize = 12)
+	Return a string composed of RTF paragraph code - creates an empty paragraph (or blank line).  The defaults are as indicated above.
+
+string textBlock(integer $fontBlock, integer $fontSize, string $input)
+	Takes the $input string and encodes it for RTF with the set $fontBlock and $fontSize.  If either of these three parameters are false, textBlock() returns FALSE.
+
+string bold(string $input)
+	Takes the input string and encodes it for RTF bold text. The return can then be part of the $input to textBlock().
+
+string italics(string $input)
+	Takes the input string and encodes it for RTF italics text. The return can then be part of the $input to textBlock().
+
+string underline(string $input)
+	Takes the input string and encodes it for RTF underline text. The return can then be part of the $input to textBlock().
+	
+string utf8_2_unicode(string $input)
+	Takes the input string and encodes in RTF 1.16(?) unicode standard so that characters with an ASCII value of >= 128 will 
+	be properly displayed in modern RTF readers.  Depending on your input string, you may need to encode it as UTF-8 first using PHP's inbuilt utf8_encode() function.
+	
+string emailText(string $email, string $displayText = FALSE)
+	Takes the $email string and creates a mailto: hyperlink.
+	
+string urlText(string $url, string $displayText = FALSE)
+	Takes the $url string and creates a URL hyperlink.
+	
+string superscript(string $input)
+	Takes the input string and encodes it for RTF superscript text. The return can then be part of the $input to textBlock().
+	
+string subscript(string $input)
+	Takes the input string and encodes it for RTF subscript text. The return can then be part of the $input to textBlock().
+	
+string setFontColour(string $colour = 'black')
+	Sets subsequent text to the colour indicated by $colour (black, maroon, green, olive, navy, purple, teal, gray, silver, red, lime, yellow, blue, fuchsia, aqua, white).
+
