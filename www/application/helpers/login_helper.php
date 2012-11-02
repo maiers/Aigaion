@@ -20,6 +20,9 @@
     function getUserLogin() {
         $CI = &get_instance();
     
+        // sometimes necessary to load the user model explictily
+        $CI->load->model('user');
+        
         $userlogin = $CI->latesession->get('USERLOGIN');
         if (!isset($userlogin)||($userlogin==null)) {
             $userlogin = new UserLogin();

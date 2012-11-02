@@ -429,7 +429,7 @@ TODO:
       
     if ($userlogin->isAnonymous()) //get only public authors
     {
-      $Q = $CI->db->query("SELECT DISTINC ".AIGAION_DB_PREFIX."author.* FROM ".AIGAION_DB_PREFIX."author, ".AIGAION_DB_PREFIX."publicationauthorlink, ".AIGAION_DB_PREFIX."publication
+      $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."author.* FROM ".AIGAION_DB_PREFIX."author, ".AIGAION_DB_PREFIX."publicationauthorlink, ".AIGAION_DB_PREFIX."publication
                            WHERE ".AIGAION_DB_PREFIX."publication.derived_read_access_level = 'public'
                            AND ".AIGAION_DB_PREFIX."publicationauthorlink.pub_id = ".AIGAION_DB_PREFIX."publication.pub_id 
                            AND ".AIGAION_DB_PREFIX."author.author_id = ".AIGAION_DB_PREFIX."publicationauthorlink.author_id
@@ -437,7 +437,7 @@ TODO:
     }
     else //get all non-private authors and authors for publications that belong to the user
     {
-      $Q = $CI->db->query("SELECT DISTINC ".AIGAION_DB_PREFIX."author.* FROM ".AIGAION_DB_PREFIX."author, ".AIGAION_DB_PREFIX."publicationauthorlink, ".AIGAION_DB_PREFIX."publication
+      $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."author.* FROM ".AIGAION_DB_PREFIX."author, ".AIGAION_DB_PREFIX."publicationauthorlink, ".AIGAION_DB_PREFIX."publication
                            WHERE (".AIGAION_DB_PREFIX."publication.derived_read_access_level != 'private' 
                                   OR ".AIGAION_DB_PREFIX."publication.user_id = ".$userlogin->userId().")
                            AND ".AIGAION_DB_PREFIX."publicationauthorlink.pub_id = ".AIGAION_DB_PREFIX."publication.pub_id 
