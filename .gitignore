@@ -1,0 +1,6 @@
+#netbeans
+/nbproject
+/nbproject/private/
+
+#application specific
+/www/application/logs/*
