@@ -5,15 +5,15 @@
 <title><?php 
         if (getConfigurationSetting('WINDOW_TITLE')!='')
             echo getConfigurationSetting('WINDOW_TITLE').' - '; 
-        ?> Public RSS - Aigaion 2.0
+        ?> Public RSS - Aigaion 2.5
 </title>
 <description><?php 
         if (getConfigurationSetting('WINDOW_TITLE')!='')
             echo getConfigurationSetting('WINDOW_TITLE').' - '; 
-        ?> Public RSS - Aigaion 2.0
+        ?> Public RSS - Aigaion 2.5
 </description>
 <link><?php  echo site_url(''); ?></link>
-<copyright>Aigaion.nl</copyright>
+<copyright>Aigaion.de</copyright>
 <?php
 $this->load->helper('url');
 foreach ($publications as $publication)

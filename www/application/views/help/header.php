@@ -15,7 +15,7 @@
     <li class='help'>[<?php echo anchor('help/viewhelp/themes','Themes'); ?>]</li>
     <li class='help'>[<?php echo anchor('help/viewhelp/about','About'); ?>]<br/></li>
 
-    <li class='help'>[See also <a href='http://wiki.aigaion.nl' target=_blank>the documentation wiki</a> for more documentation.]</li>
+    <li class='help'>[See also <a href='http://www.aigaion.de/documentation' target=_blank>the website</a> for more documentation.]</li>
   </ul>
   
 </div>

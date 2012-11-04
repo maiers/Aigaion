@@ -810,7 +810,7 @@ class UserLogin {
                           <td>"
                           .__("This site is powered by Aigaion - A PHP/Web based management system for shared and annotated bibliographies.")
                           ." "
-                          .sprintf(__("For more information visit %s"),"<a href='http://www.aigaion.nl/' class='open_extern'>www.aigaion.nl</a>.")
+                          .sprintf(__("For more information visit %s"),"<a href='http://www.aigaion.de/' class='open_extern'>www.aigaion.de</a>.")
                           ."</td>
                           <td>
                           <a href='http://sourceforge.net/projects/aigaion' class='open_extern'>

@@ -157,7 +157,7 @@ echo $this->form_validation->error_string();
 	    </tr>
 
         <tr>
-            <td colspan='2'><p class='header2'><?php echo __('Login settings (LDAP):')."</p>".__("If you use LDAP authentication, you should set the LDAP server and the base DN. (e.g. server: ldap.aigaion.nl, base dn: dc=dev,dc=aigaion,dc=nl) (That's just an example! We don't really have an LDAP server at Aigaion.nl!)");?>.
+            <td colspan='2'><p class='header2'><?php echo __('Login settings (LDAP):')."</p>".__("If you use LDAP authentication, you should set the LDAP server and the base DN. (e.g. server: ldap.aigaion.de, base dn: dc=dev,dc=aigaion,dc=nl) (That's just an example! We don't really have an LDAP server at Aigaion.de!)");?>.
             </td>
         </tr>
 	    
@@ -176,7 +176,7 @@ echo $this->form_validation->error_string();
         </tr>
         <tr>
             <td align='left' colspan='2'><img class='icon' src='<?php echo getIconUrl("small_arrow.gif"); ?>'>
-	        <?php echo __('The LDAP server (like: ldap.aigaion.nl).');?></td>
+	        <?php echo __('The LDAP server (like: ldap.aigaion.de).');?></td>
 	    </tr>
 	    <tr>    
 	        <td><label><?php echo __('LDAP base DN:');?></label></td>
@@ -201,7 +201,7 @@ echo $this->form_validation->error_string();
         </tr>
         <tr>
             <td align='left' colspan='2'><img class='icon' src='<?php echo getIconUrl("small_arrow.gif"); ?>'>
-	        <?php echo __('The domain for logging in to the LDAP server (like: dev.aigaion.nl).');?></td>
+	        <?php echo __('The domain for logging in to the LDAP server (like: dev.aigaion.de).');?></td>
 	    </tr>
          <tr>
 	        <td><label><?php echo __("Server type is 'ActiveDirectory':");?></label></td>

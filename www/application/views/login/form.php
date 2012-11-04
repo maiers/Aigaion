@@ -81,7 +81,7 @@
           </tr>
           <tr>
             <td colspan='2'>
-              <?php echo sprintf(__('For more information about the Aigaion bibliography system visit %s'), '<a href="http://www.aigaion.nl/" class="external">Aigaion.nl</a>');?>
+              <?php echo sprintf(__('For more information about the Aigaion bibliography system visit %s'), '<a href="http://www.aigaion.de/" class="external">Aigaion.de</a>');?>
             </td>
           </tr>
         </table>

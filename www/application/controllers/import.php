@@ -138,7 +138,7 @@ class Import extends CI_Controller {
       <ul>
        <li>".__("Please verify the input.")."</li>
        <li>".__("If the input is correct, please verify the contents of the \"BibTeX strings\" setting under \"In- and output settings\", in the site configuration screen.")."</li>
-       <li>".__("If that setting is correct, too, please submit a bug report at http://aigaion.nl/")."</li>
+       <li>".__("If that setting is correct, too, please submit a bug report at http://aigaion.de/")."</li>
       </ul><br/>");
       if (!$fromFile) {
         $this->viewform($import_data);
