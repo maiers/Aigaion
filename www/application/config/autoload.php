@@ -58,8 +58,8 @@ $autoload['libraries'] = array('database','latesession','userlogin','ajax',
                                'topic_db','attachment_db','note_db',
                                'publication_db','author_db',
                                'keyword_db','bookmarklist_db',
-                               'parsecreators','parsemonth','parsepage','file_upload','customfields_db',
-                               'tbswrapper');
+                               'parsecreators','parsemonth','parsepage','file_upload','customfields_db' //, 'tbswrapper'
+                               );
 
 
 /*
