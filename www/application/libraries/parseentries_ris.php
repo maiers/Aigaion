@@ -74,8 +74,8 @@ class Parseentries_ris
     'PY',
     'Y2', //Date secondary
     'N1', //Note
-    'AB',
-    'N2', //Abstract
+    'N2',
+    'AB', //Abstract
     'KW', //Keyword, can have multiple per entry
     'RP', //Reprint status
     'JF', //Periodical name, full format
