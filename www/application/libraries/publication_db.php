@@ -1070,6 +1070,38 @@ class Publication_db {
   	return 0;  	  	
   }
   
+  function getVisibleCountForTopic($topic_id)
+  {
+  	$CI = &get_instance();
+    $userlogin=getUserLogin();
+    
+    if ($userlogin->hasRights('read_all_override'))
+      return $this->getCountForTopic($topic_id);
+    
+    if ($userlogin->isAnonymous()) //get only public publications
+    {
+  	$Q = $CI->db->query("SELECT DISTINCT count(*) c FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+  	    WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+  	    AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+        AND   ".AIGAION_DB_PREFIX."publication.derived_read_access_level = 'public'");
+    }
+    else //get all non-private publications and publications that belong to the user
+    {
+        $Q = $CI->db->query("SELECT DISTINCT count(*) c FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+  	    WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+  	    AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+        AND  (".AIGAION_DB_PREFIX."publication.derived_read_access_level != 'private' 
+           OR ".AIGAION_DB_PREFIX."publication.user_id = ".$userlogin->userId().")");
+    }
+  	
+  	foreach ($Q->result() as $row)
+  	{
+  		return $row->c;
+  	}
+
+  	return 0;  	  	
+  }
+  
   /**
    * Get information about the number of publications
    * for each criterion: year/type/author(first letter)/rating
