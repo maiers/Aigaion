@@ -1114,6 +1114,7 @@ class Publication_db {
   	$CI = &get_instance();
   	
   	$sql = array();
+    # @TODO: (KK) needs only to search for what is wanted to be sorted by; this has been done in getVisiblePubStructForTopic
   	$sql[] = "(SELECT 'year' grp, p.year value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
   	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
   	  	  	    AND p.pub_id = t.pub_id ".
@@ -1150,7 +1151,114 @@ class Publication_db {
     return $result;
   	
   }
-  
+ 
+  function getVisiblePubStructForTopic($topic_id, $order='year')
+  {
+  	$CI = &get_instance();
+    $userlogin = getUserLogin();
+    if ($userlogin->hasRights('read_all_override'))
+      return $this->getPubStructForTopic($topic_id, $order);
+  	
+  	$sql = array();
+    if ($userlogin->isAnonymous()) //get only public publications
+    {
+        switch($order) {
+            case 'year':
+            case 'recent':
+  	$sql = "(SELECT 'year' grp, p.year value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY p.year)";
+            break;
+            case 'type':
+  	$sql = "(SELECT 'type' grp, p.pub_type value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY p.pub_type)";
+            break;
+            case 'author':
+  	$sql = "(SELECT 'author' grp, UPPER(LEFT(cleanauthor,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY UPPER(LEFT(cleanauthor,1)))";
+            break;
+            case 'title':
+  	$sql = "(SELECT 'title' grp, UPPER(LEFT(cleantitle,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	  	WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+                AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  	  					" GROUP BY UPPER(LEFT(cleantitle,1)))";
+            break;
+            case 'rating':
+  	$sql = "(SELECT 'rating' grp, mark value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY mark)";
+            break;
+        }
+    }
+    else //get all non-private publications and publications that belong to the user
+    {
+        switch($order) {
+            case 'year':
+    $sql = "(SELECT 'year' grp, p.year value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY p.year)";
+            break;
+            case 'type':
+  	$sql = "(SELECT 'type' grp, p.pub_type value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY p.pub_type)";
+            break;
+            case 'author':
+  	$sql = "(SELECT 'author' grp, UPPER(LEFT(cleanauthor,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY UPPER(LEFT(cleanauthor,1)))";
+            break;
+            case 'title':
+  	$sql = "(SELECT 'title' grp, UPPER(LEFT(cleantitle,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  	  					" GROUP BY UPPER(LEFT(cleantitle,1)))";
+            break;
+            case 'rating':
+  	$sql = "(SELECT 'rating' grp, mark value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY mark)";
+            break;
+        }
+    }
+  	
+    $Q = $CI->db->query($sql);
+  	
+  	$result = array();
+    foreach ($Q->result() as $row)
+    {
+        $result[] = array('group' => $row->grp, 'value' => $row->value, 'count' => $row->c);
+    }
+      
+    return $result;
+  	
+  }
+    
 ///////publication list functions
 
   function getForTopic($topic_id,$order='',$page=0)
