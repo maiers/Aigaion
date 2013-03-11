@@ -1573,10 +1573,15 @@ class Publication_db {
     $CI = &get_instance();
     //we need merge functionality here, so initialze a merge cache
     $this->crossref_cache = array();
-    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."publicationkeywordlink
-    WHERE ".AIGAION_DB_PREFIX."publicationkeywordlink.keyword_id = ".$CI->db->escape($keyword->keyword_id)."
-    AND ".AIGAION_DB_PREFIX."publication.pub_id = ".AIGAION_DB_PREFIX."publicationkeywordlink.pub_id
-    ORDER BY ".$orderby." ".$limit);
+    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication
+    INNER JOIN (SELECT ".AIGAION_DB_PREFIX."publication.pub_id FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."publicationkeywordlink
+      WHERE ".AIGAION_DB_PREFIX."publicationkeywordlink.keyword_id = ".$CI->db->escape($keyword->keyword_id)."
+      AND   ".AIGAION_DB_PREFIX."publicationkeywordlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+      ".$limit.")
+    AS lim USING (pub_id)
+    ORDER BY ".$orderby);
+
+
 
     $result = array();
     foreach ($Q->result() as $row)
