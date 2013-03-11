@@ -72,7 +72,7 @@ class Import extends CI_Controller {
       //if not a file, get import data from post
       $import_data  = $this->input->post('import_data');    
     }
-    if ($import_data == '') 
+    if (trim($import_data) == '') 
     {
         appendErrorMessage(__("Import").": ".__("no import data entered.")."<br/>");
         $this->viewform();
