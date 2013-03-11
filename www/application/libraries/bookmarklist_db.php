@@ -45,7 +45,7 @@ class Bookmarklist_db {
             return;
         }
         //get all accessible publications for this topic
-        $pubs = $CI->publication_db->getForTopic($topic_id,'',-1);
+        $pubs = $CI->publication_db->getVisibleForTopic($topic_id,'',-1);
         foreach ($pubs as $pub) {
             $this->addPublication($pub->pub_id);
         }
@@ -61,7 +61,7 @@ class Bookmarklist_db {
             return;
         }
         //get all accessible publications for this topic
-        $pubs = $CI->publication_db->getForTopic($topic_id,'',-1);
+        $pubs = $CI->publication_db->getVisibleForTopic($topic_id,'',-1);
         foreach ($pubs as $pub) {
             $this->removePublication($pub->pub_id);
         }

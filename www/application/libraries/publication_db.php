@@ -1070,6 +1070,38 @@ class Publication_db {
   	return 0;  	  	
   }
   
+  function getVisibleCountForTopic($topic_id)
+  {
+  	$CI = &get_instance();
+    $userlogin=getUserLogin();
+    
+    if ($userlogin->hasRights('read_all_override'))
+      return $this->getCountForTopic($topic_id);
+    
+    if ($userlogin->isAnonymous()) //get only public publications
+    {
+  	$Q = $CI->db->query("SELECT DISTINCT count(*) c FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+  	    WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+  	    AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+        AND   ".AIGAION_DB_PREFIX."publication.derived_read_access_level = 'public'");
+    }
+    else //get all non-private publications and publications that belong to the user
+    {
+        $Q = $CI->db->query("SELECT DISTINCT count(*) c FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+  	    WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+  	    AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+        AND  (".AIGAION_DB_PREFIX."publication.derived_read_access_level != 'private' 
+           OR ".AIGAION_DB_PREFIX."publication.user_id = ".$userlogin->userId().")");
+    }
+  	
+  	foreach ($Q->result() as $row)
+  	{
+  		return $row->c;
+  	}
+
+  	return 0;  	  	
+  }
+  
   /**
    * Get information about the number of publications
    * for each criterion: year/type/author(first letter)/rating
@@ -1082,6 +1114,7 @@ class Publication_db {
   	$CI = &get_instance();
   	
   	$sql = array();
+    # @TODO: (KK) needs only to search for what is wanted to be sorted by; this has been done in getVisiblePubStructForTopic
   	$sql[] = "(SELECT 'year' grp, p.year value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
   	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
   	  	  	    AND p.pub_id = t.pub_id ".
@@ -1118,7 +1151,114 @@ class Publication_db {
     return $result;
   	
   }
-  
+ 
+  function getVisiblePubStructForTopic($topic_id, $order='year')
+  {
+  	$CI = &get_instance();
+    $userlogin = getUserLogin();
+    if ($userlogin->hasRights('read_all_override'))
+      return $this->getPubStructForTopic($topic_id, $order);
+  	
+  	$sql = array();
+    if ($userlogin->isAnonymous()) //get only public publications
+    {
+        switch($order) {
+            case 'year':
+            case 'recent':
+  	$sql = "(SELECT 'year' grp, p.year value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY p.year)";
+            break;
+            case 'type':
+  	$sql = "(SELECT 'type' grp, p.pub_type value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY p.pub_type)";
+            break;
+            case 'author':
+  	$sql = "(SELECT 'author' grp, UPPER(LEFT(cleanauthor,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY UPPER(LEFT(cleanauthor,1)))";
+            break;
+            case 'title':
+  	$sql = "(SELECT 'title' grp, UPPER(LEFT(cleantitle,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	  	WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+                AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  	  					" GROUP BY UPPER(LEFT(cleantitle,1)))";
+            break;
+            case 'rating':
+  	$sql = "(SELECT 'rating' grp, mark value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND p.derived_read_access_level = 'public'".
+  	  					" GROUP BY mark)";
+            break;
+        }
+    }
+    else //get all non-private publications and publications that belong to the user
+    {
+        switch($order) {
+            case 'year':
+    $sql = "(SELECT 'year' grp, p.year value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY p.year)";
+            break;
+            case 'type':
+  	$sql = "(SELECT 'type' grp, p.pub_type value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY p.pub_type)";
+            break;
+            case 'author':
+  	$sql = "(SELECT 'author' grp, UPPER(LEFT(cleanauthor,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY UPPER(LEFT(cleanauthor,1)))";
+            break;
+            case 'title':
+  	$sql = "(SELECT 'title' grp, UPPER(LEFT(cleantitle,1)) value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  	  					" GROUP BY UPPER(LEFT(cleantitle,1)))";
+            break;
+            case 'rating':
+  	$sql = "(SELECT 'rating' grp, mark value, count(*) c FROM ".AIGAION_DB_PREFIX."publication p, ".AIGAION_DB_PREFIX."topicpublicationlink t
+  	  	  	    WHERE t.topic_id = ".$CI->db->escape($topic_id)."
+  	  	  	    AND p.pub_id = t.pub_id 
+                AND (p.derived_read_access_level != 'private' 
+                     OR p.user_id = ".$userlogin->userId().")".
+  	  					" GROUP BY mark)";
+            break;
+        }
+    }
+  	
+    $Q = $CI->db->query($sql);
+  	
+  	$result = array();
+    foreach ($Q->result() as $row)
+    {
+        $result[] = array('group' => $row->grp, 'value' => $row->value, 'count' => $row->c);
+    }
+      
+    return $result;
+  	
+  }
+    
 ///////publication list functions
 
   function getForTopic($topic_id,$order='',$page=0)
@@ -1147,7 +1287,6 @@ class Publication_db {
     $CI = &get_instance();
     
     //do we need multipage output / use limit statement
-    $limit = "";
     $userlogin = getUserLogin();
     $liststyle = $userlogin->getPreference('liststyle');
     $limit = "";
@@ -1161,10 +1300,92 @@ class Publication_db {
     }
     //we need merge functionality here, so initialze a merge cache
     $this->crossref_cache = array();
-    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
-    WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
-    AND ".AIGAION_DB_PREFIX."publication.pub_id = ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id
-    ORDER BY ".$orderby." ".$limit);
+    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication
+    INNER JOIN (SELECT ".AIGAION_DB_PREFIX."publication.pub_id FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+      WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+      AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+      ORDER BY ".$orderby." ".$limit.")
+    AS lim USING (pub_id)");
+
+    $result = array();
+    foreach ($Q->result() as $row)
+    {
+      $next = $this->getFromRow($row);
+      if ($next != null)
+      {
+        $result[] = $next;
+      }
+    }
+
+    unset($this->crossref_cache);
+    return $result;
+  }
+  
+  function getVisibleForTopic($topic_id,$order='',$page=0)
+  {
+    $CI = &get_instance();
+    $userlogin=getUserLogin();
+    
+    if ($userlogin->hasRights('read_all_override'))
+      return $this->getForTopic($topic_id,$order,$page);
+      
+    $orderby='actualyear DESC, cleantitle';
+    switch ($order) {
+      case 'year':
+        $orderby='actualyear DESC, cleantitle';
+        break;
+      case 'type':
+        $orderby='pub_type ASC, cleanjournal ASC, actualyear DESC, cleantitle'; //funny thing: article is lowest in alphabetical order, so this ordering is enough...
+        break;
+      case 'recent':
+        $orderby='pub_id DESC';
+        break;
+      case 'title':
+        $orderby='cleantitle';
+        break;
+      case 'author':
+        $orderby='cleanauthor, actualyear DESC';
+        break;
+      case 'rating':
+      	$orderby='mark DESC, actualyear DESC';
+        break;
+    }
+    
+    //do we need multipage output / use limit statement
+    $limit = "";
+    $liststyle = $userlogin->getPreference('liststyle');
+    if ($page!=-1)
+    {
+      if ($liststyle > 0)
+      {
+        $limitOffset = $liststyle * $page;
+        $limit = "LIMIT ".$limitOffset.",".$liststyle;
+      }
+    }
+    //we need merge functionality here, so initialze a merge cache
+    $this->crossref_cache = array();
+    
+    if ($userlogin->isAnonymous()) //get only public publications
+    {
+    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication
+    INNER JOIN (SELECT ".AIGAION_DB_PREFIX."publication.pub_id FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+      WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+      AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+      AND   ".AIGAION_DB_PREFIX."publication.derived_read_access_level = 'public'
+      ORDER BY ".$orderby." ".$limit.")
+    AS lim USING (pub_id)");
+     }
+    else //get all non-private publications and publications that belong to the user
+    {
+    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication
+    INNER JOIN (SELECT ".AIGAION_DB_PREFIX."publication.pub_id FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."topicpublicationlink
+      WHERE ".AIGAION_DB_PREFIX."topicpublicationlink.topic_id = ".$CI->db->escape($topic_id)."
+      AND   ".AIGAION_DB_PREFIX."topicpublicationlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+      AND ( ".AIGAION_DB_PREFIX."publication.derived_read_access_level != 'private' 
+         OR ".AIGAION_DB_PREFIX."publication.user_id = ".$userlogin->userId().")
+      ORDER BY ".$orderby." ".$limit.")
+    AS lim USING (pub_id)");
+    }
 
     $result = array();
     foreach ($Q->result() as $row)
@@ -1352,10 +1573,15 @@ class Publication_db {
     $CI = &get_instance();
     //we need merge functionality here, so initialze a merge cache
     $this->crossref_cache = array();
-    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."publicationkeywordlink
-    WHERE ".AIGAION_DB_PREFIX."publicationkeywordlink.keyword_id = ".$CI->db->escape($keyword->keyword_id)."
-    AND ".AIGAION_DB_PREFIX."publication.pub_id = ".AIGAION_DB_PREFIX."publicationkeywordlink.pub_id
-    ORDER BY ".$orderby." ".$limit);
+    $Q = $CI->db->query("SELECT DISTINCT ".AIGAION_DB_PREFIX."publication.* FROM ".AIGAION_DB_PREFIX."publication
+    INNER JOIN (SELECT ".AIGAION_DB_PREFIX."publication.pub_id FROM ".AIGAION_DB_PREFIX."publication, ".AIGAION_DB_PREFIX."publicationkeywordlink
+      WHERE ".AIGAION_DB_PREFIX."publicationkeywordlink.keyword_id = ".$CI->db->escape($keyword->keyword_id)."
+      AND   ".AIGAION_DB_PREFIX."publicationkeywordlink.pub_id   = ".AIGAION_DB_PREFIX."publication.pub_id
+      ".$limit.")
+    AS lim USING (pub_id)
+    ORDER BY ".$orderby);
+
+
 
     $result = array();
     foreach ($Q->result() as $row)

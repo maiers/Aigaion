@@ -231,6 +231,44 @@ class Keyword_db {
     return $result;
   }
   
+  function getVisibleKeywordsForPublication($pub_id)
+  {
+    $CI = &get_instance();
+    $userlogin=getUserLogin();
+    
+    if ($userlogin->hasRights('read_all_override'))
+      return $this->getKeywordsForPublication($pub_id);
+      
+    if ($userlogin->isAnonymous()) //get only public keywords
+    {
+      $Q = $CI->db->query("SELECT ".AIGAION_DB_PREFIX."keywords.* FROM ".AIGAION_DB_PREFIX."keywords, ".AIGAION_DB_PREFIX."publicationkeywordlink, ".AIGAION_DB_PREFIX."publication
+                          WHERE ".AIGAION_DB_PREFIX."publicationkeywordlink.pub_id = ".$CI->db->escape($pub_id)." 
+                          AND ".AIGAION_DB_PREFIX."publicationkeywordlink.keyword_id = ".AIGAION_DB_PREFIX."keywords.keyword_id
+                          AND ".AIGAION_DB_PREFIX."publication.derived_read_access_level = 'public'
+                          ORDER BY ".AIGAION_DB_PREFIX."keywords.keyword");
+    }
+    else //get all non-private authors and authors for publications that belong to the user
+    {
+      $Q = $CI->db->query("SELECT ".AIGAION_DB_PREFIX."keywords.keyword FROM ".AIGAION_DB_PREFIX."keywords, ".AIGAION_DB_PREFIX."publicationkeywordlink, ".AIGAION_DB_PREFIX."publication
+                          WHERE ".AIGAION_DB_PREFIX."publicationkeywordlink.pub_id = ".$CI->db->escape($pub_id)." 
+                          AND ".AIGAION_DB_PREFIX."publicationkeywordlink.keyword_id = ".AIGAION_DB_PREFIX."keywords.keyword_id
+                          AND (".AIGAION_DB_PREFIX."publication.derived_read_access_level != 'private' 
+                                OR ".AIGAION_DB_PREFIX."publication.user_id = ".$userlogin->userId().")
+                          ORDER BY ".AIGAION_DB_PREFIX."keywords.keyword");
+    }
+    
+    $result = array();
+    if ($Q->num_rows() > 0)
+    {
+      foreach ($Q->result() as $R)
+      {
+        $result[] = $this->getFromRow($R);
+      }
+    }
+
+    return $result;
+  }
+  
   function getPublicationCount($keyword_id) {
     $CI = &get_instance();
     $CI->db->select("keyword_id");

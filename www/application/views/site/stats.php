@@ -14,7 +14,7 @@ Parameters:
 	//get number of maintopics
     $topicCount = $this->topic_db->getMainTopicCount();
 
-	$publicationCount = $this->topic_db->getPublicationCountForTopic(1);
+	$publicationCount = $this->topic_db->getVisiblePublicationCountForTopic(1);
 	$publicationReadCount = $this->topic_db->getReadPublicationCountForTopic(1);
 
 	echo "
