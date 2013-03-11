@@ -41,7 +41,7 @@ Parameters:
                     src     = '".getIconUrl('tree_blank.gif')."'
                     alt     = 'blank'/>\n";
     }
-   	$publicationCount     = $this->topic_db->getPublicationCountForTopic($topic->topic_id);
+   	$publicationCount     = $this->topic_db->getVisiblePublicationCountForTopic($topic->topic_id);
 	$publicationReadCount = $this->topic_db->getReadPublicationCountForTopic($topic->topic_id);
 
     echo anchor('topics/single/'.$topic->topic_id,$topic->name)." <span title='".sprintf(__('read: %s of %s publications'), $publicationReadCount, $publicationCount)."'><i> ".$publicationReadCount.'/'.$publicationCount."</i></span>\n";

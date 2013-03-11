@@ -359,7 +359,7 @@ class Topics extends CI_Controller {
         if ($userlogin->getPreference('liststyle')>0) {
             //set these parameters when you want to get a good multipublication list display
             $content['multipage']       = True;
-            $content['pubCount']        = $this->topic_db->getPublicationCountForTopic($topic_id);
+            $content['pubCount']        = $this->topic_db->getVisiblePublicationCountForTopic($topic_id);
             $content['currentpage']     = $page;
             $content['multipageprefix'] = 'topics/single/'.$topic_id.'/'.$order.'/';
         }

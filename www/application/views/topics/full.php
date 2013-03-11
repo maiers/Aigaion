@@ -101,7 +101,7 @@ if (sizeof($keywords) > 0)
 	//Get statistics for this topic
   $authorCount          = $this->topic_db->getAuthorCountForTopic($topic->topic_id);
   $topicCount           = count($topic->getChildren());
-	$publicationCount     = $this->topic_db->getPublicationCountForTopic($topic->topic_id);
+	$publicationCount     = $this->topic_db->getVisiblePublicationCountForTopic($topic->topic_id);
 	$publicationReadCount = $this->topic_db->getReadPublicationCountForTopic($topic->topic_id);
 
 if ($publicationCount == 1) 
