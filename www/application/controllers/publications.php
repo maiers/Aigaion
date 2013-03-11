@@ -230,7 +230,7 @@ class Publications extends CI_Controller {
   		$content['currentpage']     = $page;
   		$content['multipageprefix'] = 'publications/showlist/'.$order.'/';
   	}
-  	$content['publications']    = $this->publication_db->getForTopic('1',$order,$page);
+  	$content['publications']    = $this->publication_db->getVisibleForTopic('1',$order,$page);
   	$content['order'] = $order;
   	
   	$output = $this->load->view('header', $headerdata, true);

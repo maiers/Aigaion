@@ -363,7 +363,7 @@ class Topics extends CI_Controller {
             $content['currentpage']     = $page;
             $content['multipageprefix'] = 'topics/single/'.$topic_id.'/'.$order.'/';
         }
-        $content['publications']    = $this->publication_db->getForTopic($topic_id,$order,$page);
+        $content['publications']    = $this->publication_db->getVisibleForTopic($topic_id,$order,$page);
         $content['order'] = $order;
         
         $output .= $this->load->view('publications/list', $content, true);
@@ -458,7 +458,7 @@ class Topics extends CI_Controller {
 								$content['header']          = sprintf(__("Publications for topic \"%s\""),$topic->name).' '.__('sorted by first author');
 								break;
 				}
-				$content['publications']    = $this->publication_db->getForTopic($topic_id,$order);
+				$content['publications']    = $this->publication_db->getVisibleForTopic($topic_id,$order);
 				$content['order'] = $order;
 
 
@@ -631,7 +631,7 @@ class Topics extends CI_Controller {
 
 				$recipientaddress   = $this->uri->segment(4,-1);
 				$topic_id   = $this->uri->segment(3,-1);
-				$publications = $this->publication_db->getForTopic($topic_id);
+				$publications = $this->publication_db->getVisibleForTopic($topic_id);
 
 
 				if (!isset($topic_id) || $topic_id == -1)
